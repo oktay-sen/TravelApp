@@ -23,7 +23,7 @@ public class MapsActivity extends FragmentActivity {
     private MapCallback mapCallback;
     LocationListener locationListener;
 
-    private final int REQUEST_LOCATION_PERMISSION = 7865987;
+    private final int REQUEST_LOCATION_PERMISSION = 9835;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
