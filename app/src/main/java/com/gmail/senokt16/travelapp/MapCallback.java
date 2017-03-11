@@ -5,11 +5,14 @@ import android.location.Location;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapCallback implements OnMapReadyCallback {
     private GoogleMap mMap;
+    private LatLng currentPlace;
 
     /**
      * Manipulates the map once available.
@@ -26,12 +29,15 @@ public class MapCallback implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        CircleOptions putDot = new CircleOptions();
+        putDot.center(this.currentPlace);
+        putDot.fillColor(0);
+        putDot.radius(5);
+        mMap.addCircle(putDot);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(this.currentPlace));
     }
 
     public void onLocationChanged(Location location) {
-
+        this.currentPlace = new LatLng(location.getLatitude(), location.getLongitude());
     }
 }
