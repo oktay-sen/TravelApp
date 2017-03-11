@@ -24,8 +24,12 @@ public class MapCallback implements OnMapReadyCallback {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+	Location loca = mMap.getMyLocatoin();
+	double latt = loca.getLatitude();
+	double lont = loca.getLongitude();
+	CircleOptions coTest = new CircleOptions();
+	coTest.center(new LatLng(latt, lont));
+	coTest.fillColor(0);
+        mMap.addCircle(coTest);
     }
 }
