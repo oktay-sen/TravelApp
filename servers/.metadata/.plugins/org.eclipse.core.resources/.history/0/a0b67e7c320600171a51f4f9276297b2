@@ -1,0 +1,5 @@
+
+public class place {
+	public int x;
+	public int y;
+	}

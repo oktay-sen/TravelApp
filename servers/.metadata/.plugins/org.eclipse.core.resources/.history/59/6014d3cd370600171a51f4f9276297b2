@@ -1,0 +1,6 @@
+
+public class Treasure extends Item {
+ public int x,y;
+
+	}
+

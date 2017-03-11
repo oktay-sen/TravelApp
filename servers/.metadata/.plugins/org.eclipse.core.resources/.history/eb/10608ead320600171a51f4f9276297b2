@@ -1,0 +1,6 @@
+
+public class Treasure extends Place {
+ public int x,y;
+
+	}
+
