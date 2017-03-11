@@ -52,10 +52,10 @@ public class Main {
 			}
 
 			@Override
-			public void onChildAdded(DataSnapshot snapshot, String keys) {
+			public void onChildAdded(DataSnapshot snapshot, String key) {
 				steps.add(snapshot.getValue(User.class));
-				String key = snapshot.getKey();
-				FirebaseDatabase.getInstance().getReference("users").child(key).child("footsteps")
+				String key1 = snapshot.getKey();
+				FirebaseDatabase.getInstance().getReference("users").child(key1).child("footsteps")
 				.addChildEventListener(new ChildEventListener() {
 
 					@Override
