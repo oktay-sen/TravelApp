@@ -13,10 +13,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import javax.swing.*;
+
 public class Main {
 
+	private static JTextArea jTextArea;
+
 	public static void main(String[] args) throws FileNotFoundException {
-		
+		JFrame jFrame = new JFrame();
+
+		jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		jFrame.setSize(640, 480);
+		jTextArea = new JTextArea();
+		jTextArea.setEditable(false);
+		jFrame.add( jTextArea );
+		jFrame.setTitle("Travel App Server");
+		jFrame.setVisible(true);
+
+		println("Firebase initializing.");
 		FileInputStream serviceAccount =
 				new FileInputStream("travelapp-970a5-firebase-adminsdk-cf7q6-a0f4ec6da1.json");
 		FirebaseOptions options = new FirebaseOptions.Builder()
@@ -24,7 +38,8 @@ public class Main {
 				.setDatabaseUrl("https://travelapp-970a5.firebaseio.com/")
 				.build();
 		FirebaseApp.initializeApp(options);
-		
+		println("Firebase initialized.");
+
 		DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 		DatabaseReference usersRef = ref.child("users");
 		usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -38,6 +53,7 @@ public class Main {
 			public void onDataChange(DataSnapshot snapshot) {
 				ArrayList<User> users = new ArrayList<>();
 				for (DataSnapshot user : snapshot.getChildren()) {
+					println("User found: " + user.getKey());
 					users.add(user.getValue(User.class));
 				}
 			}
@@ -52,7 +68,8 @@ public class Main {
 			}
 
 			@Override
-			public void onChildAdded(DataSnapshot snapshot, String keys) {
+			public void onChildAdded(DataSnapshot snapshot, String fasdghjgk) {
+				println("Usersref child added.");
 				steps.add(snapshot.getValue(User.class));
 				String key = snapshot.getKey();
 				FirebaseDatabase.getInstance().getReference("users").child(key).child("footsteps")
@@ -132,7 +149,9 @@ public class Main {
 		});
 		DatabaseReference r= FirebaseDatabase.getInstance().getReference();
 		DatabaseReference usersR = r.child("users").push();
-		usersR.setValue("Mark");
+		User us = new User();
+		us.username = "Mark";
+		usersR.setValue(us);
 		
 		DatabaseReference x= FirebaseDatabase.getInstance().getReference();
 		DatabaseReference u = x.child("places").push();
@@ -141,6 +160,11 @@ public class Main {
 		t.y = 10;
 		u.setValue(t);
 		
+	}
+
+	private static void println(String s) {
+		if (jTextArea != null)
+			SwingUtilities.invokeLater(() -> jTextArea.append(s + "\n"));
 	}
 
 }
