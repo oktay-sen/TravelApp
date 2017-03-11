@@ -1,0 +1,6 @@
+
+public class Cage {
+	public void setAnimal(Animal animal) {
+		
+	}
+}
