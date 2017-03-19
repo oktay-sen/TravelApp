@@ -32,7 +32,7 @@ public class MapsActivity extends FragmentActivity {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapCallback = new MapCallback();
+        mapCallback = new MapCallback(this);
         mapFragment.getMapAsync(mapCallback);
 
         locationListener = new LocationListener() {
@@ -62,7 +62,7 @@ public class MapsActivity extends FragmentActivity {
                     android.Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         } else {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
     }
 
